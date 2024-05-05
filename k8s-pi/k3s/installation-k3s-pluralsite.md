@@ -33,6 +33,7 @@ cat ~/.ssh/id_rsa.pub | ssh node4d@10.10.10.3 “cat >>~/.ssh/authorized_keys”
 
 ```sh
 sudo apt-get update
+sudo apt-get upgrade
 # change host name and exit from raspberry pi then login and see the host name has changed
 sudo hostnamectl set-hostname node25
 # check is the swapon run following command
