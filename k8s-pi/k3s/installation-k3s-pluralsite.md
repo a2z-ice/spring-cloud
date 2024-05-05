@@ -1,3 +1,12 @@
+```sh
+# copy to clipboard from tmux
+https://github.com/tmux-plugins/tmux-yank
+
+# sync hot key
+prefix + e # turn on
+prefix + E # turn off
+```
+
 Burn image using Raspberry Pi Imager
 Go to custom setting and enable ssh which will automatically enable ssh connection
 
@@ -12,6 +21,30 @@ Wifi:
 Network: assad
 Password: hinds -> **051
 ```
+
+# To make status ip
+
+```sh
+vim /etc/netplan/50-cloud-init.yaml
+
+network:
+    version: 2
+    wifis:
+        renderer: networkd
+        wlan0:
+            access-points:
+                assad:
+                    password: 11f84e570d125797720d56d918b2d1baed62dae7012a74b64c0d152fcda5ea71
+            dhcp4: no
+            addresses: [10.10.10.1/24]
+            gateway4: 10.10.10.254
+            nameservers:
+             addresses: [8.8.8.8,1.1.1.1]
+            optional: true
+
+
+```
+
 # Using LanScan software get the necessary ip address with mac address
 ```sh
 ssh node4d@10.10.10.3
@@ -114,3 +147,4 @@ curl -sfL https://get.k3s.io | K3S_URL=https://$IP_ADDRESS_OF_CONTROL_PANEL:6443
 # Go to your mac and install/download k3sup then run following command
 k3sup join --ip $IP_ADDRESS_OF_WORKER_NODE --server-ip $IP_ADDRESS_OF_CONTROL_PANEL --user ubuntu
 ```
+
