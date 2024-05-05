@@ -36,12 +36,16 @@ network:
                 assad:
                     password: 11f84e570d125797720d56d918b2d1baed62dae7012a74b64c0d152fcda5ea71
             dhcp4: no
+            optional: true
             addresses: [10.10.10.1/24]
             gateway4: 10.10.10.254
             nameservers:
              addresses: [8.8.8.8,1.1.1.1]
-            optional: true
 
+
+sudo netplan apply
+# Restart networking: Restart the networking service to apply the changes:
+sudo systemctl restart NetworkManager
 
 ```
 
