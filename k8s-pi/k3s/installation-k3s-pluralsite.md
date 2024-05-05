@@ -100,3 +100,12 @@ kubectl proxy
 ```
 
 # Prepare More raspberry pi to add more pi to the cluster
+
+```sh
+# To check each worker node can access the kube-api server do telnet
+telnet ${ip_address_of_control_panel}
+# To get the secrete token from control panel to join the other node to the cluster
+sudo cat /var/lib/rancher/k3s/server/node-token
+# Now from each worker not run the following command to join to k3s cluster
+curl -sfL https://get.k3s.io | K3S_URL=https://$IP_ADDRESS_OF_CONTROLL_PANEL:6443 K3S_TOKEN=$VALUE_OF_TOKEN_GET_FROM_CONTROLL_PANEL 
+```
