@@ -44,8 +44,6 @@ network:
 
 
 sudo netplan apply
-# Restart networking: Restart the networking service to apply the changes:
-sudo systemctl restart NetworkManager
 
 ```
 
