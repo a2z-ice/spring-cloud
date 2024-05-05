@@ -49,4 +49,53 @@ sudo nano /boot/firmware/cmdline.txt #go to the end of the first line and add fo
 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1 # after adding this to cmdline.txt reboot raspberry pi
 sudo reboot
 
+# backup raspberry pi image from sd card us dd command from mac or linux and use Win32 Disk Imager from windows
+
+# to check memory run 
+htop
+
+# Go to k3s.io and follow the instruction there like followings
+curl -sfL https://get.k3s.io | sh -  # First copy this on control panel then go for other
+# Check for Ready node, takes ~30 seconds 
+sudo k3s kubectl get node 
+
+sudo kubectl cluster-info
+
+# configure kubectl from other pc to pi-cluster 
+# Go to kubernetes document to install kubectl on the mac kubernetes.io/docs
+# After kubectl installation do the necessary to connect the install kubectl with pi clauster
+# Create .kube folder to home 
+
+mkdir ~/.kube
+
+# run following command to get the kubectl configuration detail
+kubectl get pods # This will show error with specific configuration kubectl configuration which the following
+
+/etc/rancher/k3s/k3s.yaml
+
+# Now copy the k3d kubectl config file to mac
+ssh node4d@10.10.10.3 "sudo cat /etc/rancher/k3s/k3s.yaml" > ~/.kube/config
+
+# After copying the config file try to access 
+kubectl get nodes # which will show error . See the content of config you will noticed that https://127.0.0.1:6443 will be there which is for localhost so you have to replace the if of https://127.0.0.1:6443 with raspberry pi controll panel ip like https://10.10.10.3:6443 
+
+# Now try to run kubectl command from mac
+kubectl get nods
+
+# To install kubernetes dashboard follow the kubernetes dashboard instruction
+https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+
+# Now create service account and  cluster role bindings with cluster-admin role which created by default
+sudo kubectl create serviceaccount dashboard-admin --namespace-kubernetes-dashboard
+sudo kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kubernetesh-dashboard:dashboard-admin
+# Now describe newly created service account
+sudo kubectl describe serviceaccount dashboard-admin --namespace=kubernetes-dashboard
+# Now describe the secret from the service account like following example
+sudo kubectl describe secret dashboard-admin-token-n4fh # describe secret with your specific secret name
+# To run dashboard without Nodeport or LB use kubectl proxy
+
+kubectl proxy
+
 ```
+
+# Prepare More raspberry pi to add more pi to the cluster
