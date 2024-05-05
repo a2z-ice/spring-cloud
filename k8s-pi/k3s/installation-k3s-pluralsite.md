@@ -13,7 +13,7 @@ Go to custom setting and enable ssh which will automatically enable ssh connecti
 The hootoo router information
 
 # http://10.10.10.254/app/network/wifi.html
-```sh
+```bash
 User: admin
 Password: WtrwG6Y8ec6w
 
@@ -24,9 +24,10 @@ Password: hinds -> **051
 
 # To make status ip
 
-```sh
+```bash
 vim /etc/netplan/50-cloud-init.yaml
-
+```
+```yaml
 network:
     version: 2
     wifis:
@@ -48,7 +49,7 @@ sudo netplan apply
 ```
 
 # Using LanScan software get the necessary ip address with mac address
-```sh
+```bash
 ssh node4d@10.10.10.3
 ```
 # If any error occur during ssh run the following command to regenerate the ssh finger print for the ip 10.10.10.3
@@ -56,7 +57,7 @@ ssh node4d@10.10.10.3
 ssh-keygen -R 10.10.10.3
 ```
 # To create ssh connection
-```sh
+```bash
 Run ssh-keyge command on the pc from where you want to connect the raspberry pi
 ssh-keygen
 Copy ~/.ssh/id_rsa.pub file content to raspberry pi to do this run following command
@@ -66,7 +67,7 @@ cat ~/.ssh/id_rsa.pub | ssh node4d@10.10.10.3 “cat >>~/.ssh/authorized_keys”
 
 # Installation
 
-```sh
+```bash
 sudo apt-get update
 sudo apt-get upgrade
 # change host name and exit from raspberry pi then login and see the host name has changed
