@@ -1,3 +1,8 @@
+# To give user docker permission so that no sudo privilege needed
+```sh
+sudo usermod -aG docker ${USER}
+```
+
 ```sh
 # copy to clipboard from tmux
 https://github.com/tmux-plugins/tmux-yank
