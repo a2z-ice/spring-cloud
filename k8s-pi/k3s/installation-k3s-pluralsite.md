@@ -19,7 +19,7 @@ Password: WtrwG6Y8ec6w
 
 Wifi:
 Network: assad
-Password: hinds -> **051
+Password: hints -> **051
 ```
 
 # To make status ip
