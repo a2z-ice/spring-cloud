@@ -59,7 +59,7 @@ ssh-keygen -R 10.10.10.3
 # To create ssh connection
 ```bash
 Run ssh-keyge command on the pc from where you want to connect the raspberry pi
-ssh-keygen
+ssh-keygen -t rsa -b 4096
 Copy ~/.ssh/id_rsa.pub file content to raspberry pi to do this run following command
 cat ~/.ssh/id_rsa.pub | ssh node4d@10.10.10.3 “cat >>~/.ssh/authorized_keys”
 
