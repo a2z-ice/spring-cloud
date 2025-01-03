@@ -88,6 +88,35 @@ pipeline {
             }
         }
 
+        stage('Git Fetch Sync with Remote') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'git-credential', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]){
+                    script {
+                        def gitUrl = sh(
+                            script: "git config --get remote.origin.url",
+                            returnStdout: true
+                        ).trim()
+
+                        def gitUrlWithAuth = gitUrl.replaceFirst(
+                            "https://",
+                            "https://${GIT_USERNAME}:${GIT_PASSWORD}@"
+                        )
+                        echo "Remote url ${gitUrl}"
+                        sh """
+                        git remote set-url origin ${gitUrlWithAuth}
+                        git fetch --prun --tags
+                        git tag -l > local_tags.txt && cat local_tags.txt
+                        git ls-remote --tags origin | awk -F'/' '{print \$3}' > remote_tags.txt
+                        cat remote_tags.txt
+                        comm -23 local_tags.txt remote_tags.txt | xargs -n 1 git tag -d
+                        git fetch --prune --tags
+                        git tag
+                        """
+                    }
+                }
+            }
+        }
+
         stage('Maven Build') {
             steps {
                     sh '''
